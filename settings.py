@@ -45,11 +45,17 @@ def get_available_backend():
 def wait_for_queue(backend):
     status = backend.status()
     pending_jobs = status.pending_jobs
+
     print(f"현재 대기열에 대기 중인 사용자 수: {pending_jobs}")
+
     while pending_jobs > 0:
         time.sleep(5)
         status = backend.status()
         if status.pending_jobs < pending_jobs:
             pending_jobs = status.pending_jobs
             print(f"대기열에 대기 중인 사용자 수: {pending_jobs}")
+
+    print("코드를 실행합니다.")
+    print("--------------------")
+
     return backend

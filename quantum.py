@@ -4,8 +4,7 @@ from settings import get_available_backend, wait_for_queue
 backend = get_available_backend()
 backend = wait_for_queue(backend)
 
-print("코드를 실행합니다.")
-print("--------------------")
+# --- 이 아래에 코드를 작성하여 테스트하면 됩니다. ---
 
 qc = QuantumCircuit(1, 1)
 qc.h(0)
