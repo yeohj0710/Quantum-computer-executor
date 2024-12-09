@@ -86,7 +86,7 @@ pip install -r requirements.txt
   ibm_yonsei (대기열에 대기 중인 사용자 수: 6)
   ```
 
-### 3. `quantum_local.py`
+### 3. `quantum_local.ipynb`
 
 양자 회로를 로컬 환경에서 시뮬레이션하기 위한 코드입니다.  
 IBM Quantum 서버를 사용하지 않고, `Qiskit Aer`를 통해 로컬에서 실행할 수 있는 환경을 제공합니다.  
@@ -148,11 +148,5 @@ IBM Quantum 서버를 사용하지 않고, `Qiskit Aer`를 통해 로컬에서 �
    ```
 
 5. **백엔드 대기열이 너무 길 경우**  
-   IBM Quantum 서버의 대기열이 너무 길면 `quantum_local.py`를 실행하여 로컬 환경에서 테스트할 수 있습니다.  
-   로컬 테스트는 다음 명령어로 실행할 수 있습니다:
-
-   ```
-   python quantum_local.py
-   ```
-
+   IBM Quantum 서버의 대기열이 너무 길면 `quantum_local.ipynb`를 이용해 로컬 환경에서 테스트할 수 있습니다.
    로컬 시뮬레이션에서는 백엔드 대기열 없이 빠르게 실행 결과를 확인할 수 있습니다.
