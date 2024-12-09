@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import time
 from qiskit_ibm_runtime import QiskitRuntimeService
+from backend_status_check import get_backends_with_queue
 
 load_dotenv()
 
@@ -19,21 +20,22 @@ def get_available_backend():
     global backend_name
     if not backend_name:
         print("환경 변수 'BACKEND'가 설정되지 않았습니다.")
-        print("사용 가능한 백엔드 목록:")
-        backends = service.backends()
-        if not backends:
+        print("사용 가능한 백엔드 목록과 대기열 정보를 확인합니다.")
+
+        backends_with_queue = get_backends_with_queue()
+        if not backends_with_queue:
             raise ValueError("사용 가능한 백엔드가 없습니다.")
-        for backend in backends:
-            print(f"- {backend.name}")
-        backend_name = backends[0].name
-        print(f"사용 가능한 백엔드 중 첫 번째를 선택합니다: {backend_name}")
+
+        backend_name, _ = min(backends_with_queue, key=lambda x: x[1])
+        print(f"대기열이 가장 짧은 백엔드를 선택합니다: {backend_name}")
 
     try:
         backend = service.backend(backend_name)
         print(f"선택된 backend: {backend_name}")
         status = backend.status()
+        if not status.operational:
+            raise ValueError(f"선택된 backend '{backend_name}'는 사용 불가 상태입니다.")
         print(f"대기열에 대기 중인 사용자 수: {status.pending_jobs}")
-        print(f"backend 상태: {'사용 가능' if status.operational else '사용 불가'}")
         return backend
     except Exception as e:
         print(
